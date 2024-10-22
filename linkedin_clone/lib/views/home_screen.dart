@@ -6,7 +6,7 @@ import 'package:lining_drawer/lining_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
+  
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   bool isRTL = false;
   final LiningDrawerController _controller = LiningDrawerController();
-
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     final postViewModel = Provider.of<PostViewModel>(context);
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _controller.toggleDrawer();
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/1.jpg'), 
+                      backgroundImage: AssetImage('assets/1.jpg'),
                       radius: 30,
                     ),
                   ),
@@ -74,17 +74,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const Divider(color: Colors.white), // Divider below the header
+            const Divider(color: Colors.white), 
             // Drawer Options
             Expanded(
               child: ListView(
-                padding: EdgeInsets.zero, // Remove default padding
+                padding: EdgeInsets.zero, 
                 children: [
                   ListTile(
                     leading: const Icon(Icons.person, color: Colors.black),
                     title: const Text('Profile'),
                     onTap: () {
-                      _controller.toggleDrawer(); // Close drawer when selecting an option
+                      _controller.toggleDrawer(); 
                       // Navigate to Profile
                     },
                   ),
@@ -139,12 +139,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           actions: [
-            IconButton(icon: const Icon(Icons.notifications), onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
-            }),
-            IconButton(icon: const Icon(Icons.message), onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
-            }),
+            IconButton(
+              icon: const Icon(Icons.notifications),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.message),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
+              },
+            ),
           ],
         ),
         body: ListView.builder(
@@ -165,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           backgroundImage: AssetImage("assets/1.jpg"),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left:10),
+                          padding: const EdgeInsets.only(left: 10),
                           child: Text(
                             post.username,
                             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -253,6 +259,22 @@ class _HomeScreenState extends State<HomeScreen> {
             unselectedItemColor: Colors.blue,
             selectedItemColor: Colors.black,
             backgroundColor: Colors.white,
+            onTap: (index) {
+              setState(() {
+                _selectedIndex = index; // Update the selected index
+              });
+              if (index == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BlankPage()),
+                );
+              }
+            },
           ),
         ),
       ),
@@ -260,10 +282,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
 class BlankPage extends StatelessWidget {
-  BlankPage({super.key});
-  final ScrollController _scrollController = ScrollController();
+  const BlankPage({super.key});
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -275,37 +296,53 @@ class BlankPage extends StatelessWidget {
         child: Text("This is the second route", style: TextStyle(color: Colors.white)),
       ),
       bottomNavigationBar: ScrollToHide(
-          scrollController: _scrollController,
-          height: 50,
-          hideDirection: Axis.vertical,
-          child: BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home, color: Colors.blue),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.smart_display_outlined, color: Colors.blue),
-                label: 'Video',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.people_sharp, color: Colors.blue),
-                label: 'My Network',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.notifications, color: Colors.blue),
-                label: 'Notification',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.business_center_outlined, color: Colors.blue),
-                label: 'Jobs',
-              ),
-            ],
-            unselectedItemColor: Colors.blue,
-            selectedItemColor: Colors.black,
-            backgroundColor: Colors.white,
-          ),
+        scrollController: ScrollController(), 
+        height: 50,
+        hideDirection: Axis.vertical,
+        child: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: Colors.blue),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.smart_display_outlined, color: Colors.blue),
+              label: 'Video',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people_sharp, color: Colors.blue),
+              label: 'My Network',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications, color: Colors.blue),
+              label: 'Notification',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business_center_outlined, color: Colors.blue),
+              label: 'Jobs',
+            ),
+          ],
+          unselectedItemColor: Colors.blue,
+          selectedItemColor: Colors.black,
+          backgroundColor: Colors.white,
+          onTap: (index) {
+            setState(() {
+                _selectedIndex = index; // Update the selected index
+              });
+            if (index == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()), 
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BlankPage()), 
+              );
+            }
+          },
         ),
+      ),
     );
   }
 }
