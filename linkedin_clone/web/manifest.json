@@ -1,6 +1,6 @@
 {
-    "name": "linkedin_clone",
-    "short_name": "linkedin_clone",
+    "name": "linkedin",
+    "short_name": "linkedin",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

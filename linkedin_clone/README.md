@@ -1,4 +1,4 @@
-# linkedin_clone
+# linkedin
 
 A new Flutter project.
 
