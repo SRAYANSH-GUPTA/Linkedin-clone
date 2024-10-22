@@ -33,12 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: ()
-                    {
+                    onTap: () {
                       _controller.toggleDrawer();
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/pf.jpg'), // User profile picture
+                      backgroundImage: AssetImage('assets/1.jpg'), 
                       radius: 30,
                     ),
                   ),
@@ -81,14 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView(
                 padding: EdgeInsets.zero, // Remove default padding
                 children: [
-                   ListTile(
-  leading: const Icon(Icons.person, color: Colors.black),
-  title: const Text('Profile'),
-  onTap: () {
-    _controller.toggleDrawer(); // Close drawer when selecting an option
-    // Navigate to Profile
-  },
-),
+                  ListTile(
+                    leading: const Icon(Icons.person, color: Colors.black),
+                    title: const Text('Profile'),
+                    onTap: () {
+                      _controller.toggleDrawer(); // Close drawer when selecting an option
+                      // Navigate to Profile
+                    },
+                  ),
                   ListTile(
                     leading: const Icon(Icons.business, color: Colors.black),
                     title: const Text('My Network'),
@@ -110,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Handle navigation to Settings
                     },
                   ),
-                 
                 ],
               ),
             ),
@@ -126,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _controller.toggleDrawer();
                 },
                 child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/pf.jpg'),
+                  backgroundImage: AssetImage('assets/1.jpg'),
                 ),
               ),
               const SizedBox(width: 8),
@@ -157,9 +155,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          backgroundImage: AssetImage("assets/1.jpg"),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left:10),
+                          child: Text(
+                            post.username,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      post.username,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      post.content,
+                      style: const TextStyle(color: Colors.black, fontSize: 12),
                     ),
                   ),
                   Image.network(post.imageUrl),
@@ -170,6 +185,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: const TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.thumb_up_alt_outlined),
+                        onPressed: () {
+                          // Handle like action
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.comment_outlined),
+                        onPressed: () {
+                          // Handle comment action
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.replay),
+                        onPressed: () {
+                          // Handle repost action
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: () {
+                          // Handle send action
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             );
@@ -177,32 +221,32 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         bottomNavigationBar: ScrollToHide(
           scrollController: _scrollController,
-          height: 75,
+          height: 50,
           hideDirection: Axis.vertical,
           child: BottomNavigationBar(
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home, color: Colors.grey),
+                icon: Icon(Icons.home, color: Colors.blue),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.smart_display_outlined, color: Colors.grey),
+                icon: Icon(Icons.smart_display_outlined, color: Colors.blue),
                 label: 'Video',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.people_sharp, color: Colors.grey),
+                icon: Icon(Icons.people_sharp, color: Colors.blue),
                 label: 'My Network',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.notifications, color: Colors.grey),
+                icon: Icon(Icons.notifications, color: Colors.blue),
                 label: 'Notification',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.business_center_outlined, color: Colors.grey),
+                icon: Icon(Icons.business_center_outlined, color: Colors.blue),
                 label: 'Jobs',
               ),
             ],
-            unselectedItemColor: Colors.grey,
+            unselectedItemColor: Colors.blue,
             selectedItemColor: Colors.black,
             backgroundColor: Colors.white,
           ),
