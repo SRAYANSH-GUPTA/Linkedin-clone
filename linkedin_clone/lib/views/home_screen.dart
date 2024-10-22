@@ -92,21 +92,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: const Icon(Icons.business, color: Colors.black),
                     title: const Text('My Network'),
                     onTap: () {
-                      // Handle navigation to My Network
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
                     },
                   ),
                   ListTile(
                     leading: const Icon(Icons.notifications, color: Colors.black),
                     title: const Text('Notifications'),
                     onTap: () {
-                      // Handle navigation to Notifications
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
                     },
                   ),
                   ListTile(
                     leading: const Icon(Icons.settings, color: Colors.black),
                     title: const Text('Settings'),
                     onTap: () {
-                      // Handle navigation to Settings
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
                     },
                   ),
                 ],
@@ -191,25 +191,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(
                         icon: const Icon(Icons.thumb_up_alt_outlined),
                         onPressed: () {
-                          // Handle like action
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.comment_outlined),
                         onPressed: () {
-                          // Handle comment action
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.replay),
                         onPressed: () {
-                          // Handle repost action
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.send),
                         onPressed: () {
-                          // Handle send action
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
                         },
                       ),
                     ],
@@ -252,6 +252,56 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+class BlankPage extends StatelessWidget {
+  BlankPage({super.key});
+  final ScrollController _scrollController = ScrollController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Blank Page"),
+        backgroundColor: Colors.black,
+      ),
+      body: const Center(
+        child: Text("This is the second route", style: TextStyle(color: Colors.white)),
+      ),
+      bottomNavigationBar: ScrollToHide(
+          scrollController: _scrollController,
+          height: 50,
+          hideDirection: Axis.vertical,
+          child: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home, color: Colors.blue),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.smart_display_outlined, color: Colors.blue),
+                label: 'Video',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.people_sharp, color: Colors.blue),
+                label: 'My Network',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.notifications, color: Colors.blue),
+                label: 'Notification',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.business_center_outlined, color: Colors.blue),
+                label: 'Jobs',
+              ),
+            ],
+            unselectedItemColor: Colors.blue,
+            selectedItemColor: Colors.black,
+            backgroundColor: Colors.white,
+          ),
+        ),
     );
   }
 }
