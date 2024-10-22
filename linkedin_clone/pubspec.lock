@@ -99,6 +99,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  lining_drawer:
+    dependency: "direct main"
+    description:
+      name: lining_drawer
+      sha256: c58d8e7d6c32b06c3c20ba1ebc7a9dc7636b10ba1cc00e140f7db756ab54a861
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   lints:
     dependency: transitive
     description:
@@ -155,6 +163,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.2"
+  scroll_to_hide:
+    dependency: "direct main"
+    description:
+      name: scroll_to_hide
+      sha256: "7f55ed3d61aa1833dcdc1126ca9267cab8d48e90b7501372e15da56ae39778e4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   sky_engine:
     dependency: transitive
     description: flutter

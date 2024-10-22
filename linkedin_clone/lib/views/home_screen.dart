@@ -1,73 +1,212 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/post_view_model.dart';
+import 'package:scroll_to_hide/scroll_to_hide.dart';
+import 'package:lining_drawer/lining_drawer.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool isRTL = false;
+  final LiningDrawerController _controller = LiningDrawerController();
 
   @override
   Widget build(BuildContext context) {
     final postViewModel = Provider.of<PostViewModel>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Row(
+    return LiningDrawer(
+      direction: isRTL ? DrawerDirection.fromRightToLeft : DrawerDirection.fromLeftToRight,
+      controller: _controller,
+      drawer: SafeArea(
+        child: Column(
           children: [
-            CircleAvatar(
-                  backgroundImage: AssetImage('assets/pf.jpg'),
-                ),
-            SizedBox(width: 8),
+            // Drawer Header
+            Container(
+              padding: const EdgeInsets.all(20.0),
+              color: Colors.blue,
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: ()
+                    {
+                      _controller.toggleDrawer();
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/pf.jpg'), // User profile picture
+                      radius: 30,
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          "Srayansh Gupta",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Ajay Kumar Garg Engineering College",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                        Text(
+                          "Your Tagline or Position",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(color: Colors.white), // Divider below the header
+            // Drawer Options
             Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Search',
-                ),
+              child: ListView(
+                padding: EdgeInsets.zero, // Remove default padding
+                children: [
+                   ListTile(
+  leading: const Icon(Icons.person, color: Colors.black),
+  title: const Text('Profile'),
+  onTap: () {
+    _controller.toggleDrawer(); // Close drawer when selecting an option
+    // Navigate to Profile
+  },
+),
+                  ListTile(
+                    leading: const Icon(Icons.business, color: Colors.black),
+                    title: const Text('My Network'),
+                    onTap: () {
+                      // Handle navigation to My Network
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.notifications, color: Colors.black),
+                    title: const Text('Notifications'),
+                    onTap: () {
+                      // Handle navigation to Notifications
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.settings, color: Colors.black),
+                    title: const Text('Settings'),
+                    onTap: () {
+                      // Handle navigation to Settings
+                    },
+                  ),
+                 
+                ],
               ),
             ),
           ],
         ),
-        actions: [
-          IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.message), onPressed: () {}),
-        ],
       ),
-      body: ListView.builder(
-        itemCount: postViewModel.posts.length,
-        itemBuilder: (context, index) {
-          final post = postViewModel.posts[index];
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(post.username, style: const TextStyle(fontWeight: FontWeight.bold)),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  _controller.toggleDrawer();
+                },
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/pf.jpg'),
                 ),
-                Image.network(post.imageUrl),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(post.timestamp, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Search',
+                  ),
                 ),
-              ],
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.smart_display_outlined), label: 'Video'),
-          BottomNavigationBarItem(icon: Icon(Icons.people_sharp), label: 'My Network'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(Icons.business_center_outlined), label: 'Jobs'),
-        ],
-        currentIndex: 0, // You can use a state management solution to track this
-        selectedItemColor: Colors.blue,
-        onTap: (index) {
-          // Handle navigation here
-        },
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
+            IconButton(icon: const Icon(Icons.message), onPressed: () {}),
+          ],
+        ),
+        body: ListView.builder(
+          controller: _scrollController,
+          itemCount: postViewModel.posts.length,
+          itemBuilder: (context, index) {
+            final post = postViewModel.posts[index];
+            return Card(
+              margin: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      post.username,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Image.network(post.imageUrl),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      post.timestamp,
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        bottomNavigationBar: ScrollToHide(
+          scrollController: _scrollController,
+          height: 75,
+          hideDirection: Axis.vertical,
+          child: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home, color: Colors.grey),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.smart_display_outlined, color: Colors.grey),
+                label: 'Video',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.people_sharp, color: Colors.grey),
+                label: 'My Network',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.notifications, color: Colors.grey),
+                label: 'Notification',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.business_center_outlined, color: Colors.grey),
+                label: 'Jobs',
+              ),
+            ],
+            unselectedItemColor: Colors.grey,
+            selectedItemColor: Colors.black,
+            backgroundColor: Colors.white,
+          ),
+        ),
       ),
     );
   }
