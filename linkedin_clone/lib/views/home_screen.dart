@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: const TextStyle(color: Colors.black, fontSize: 12),
                     ),
                   ),
-                  Image.network(post.imageUrl),
+                  Image.asset(post.imageUrl),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
