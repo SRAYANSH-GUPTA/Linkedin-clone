@@ -139,8 +139,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           actions: [
-            IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
-            IconButton(icon: const Icon(Icons.message), onPressed: () {}),
+            IconButton(icon: const Icon(Icons.notifications), onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
+            }),
+            IconButton(icon: const Icon(Icons.message), onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => BlankPage()));
+            }),
           ],
         ),
         body: ListView.builder(
