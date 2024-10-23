@@ -4,7 +4,7 @@ import 'package:lining_drawer/lining_drawer.dart';
 class CustomDrawer extends StatelessWidget {
   final LiningDrawerController controller;
 
-  const CustomDrawer({Key? key, required this.controller}) : super(key: key);
+  const CustomDrawer({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,16 @@ class CustomDrawer extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () => controller.toggleDrawer(),
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     backgroundImage: AssetImage('assets/pf.jpg'),
                     radius: 30,
                   ),
                 ),
                 const SizedBox(width: 15),
-                Expanded(
+                const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         "Srayansh Gupta",
                         style: TextStyle(
