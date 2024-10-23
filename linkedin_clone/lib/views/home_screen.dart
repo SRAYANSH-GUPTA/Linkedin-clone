@@ -6,11 +6,13 @@ import 'package:lining_drawer/lining_drawer.dart';
 
 class HomePage extends StatelessWidget {
   final LiningDrawerController _controller = LiningDrawerController(); 
-  final ScrollController _scrollController = ScrollController(); 
+  final ScrollController _scrollController = ScrollController();
+
+  HomePage({super.key}); 
 
   @override
   Widget build(BuildContext context) {
-    final postViewModel = Provider.of<PostViewModel>(context); // Moved this inside the build method
+    final postViewModel = Provider.of<PostViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +27,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            Expanded(
+            const Expanded(
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -141,10 +143,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final postViewModel = Provider.of<PostViewModel>(context); // Moved inside build method
+    final postViewModel = Provider.of<PostViewModel>(context);
 
     final List<Widget> pages = [
-      HomePage(), // Use the HomePage widget here
+      HomePage(),
       const Center(child: Text('Video Page')),
       const Center(child: Text('My Network')),
       const Center(child: Text('Notifications')),
@@ -255,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        body: pages[_selectedIndex], // Show selected page
+        body: pages[_selectedIndex],
         bottomNavigationBar: ScrollToHide(
           scrollController: _scrollController,
           height: 50,
@@ -269,7 +271,11 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Jobs'),
             ],
             currentIndex: _selectedIndex,
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.grey,
+            backgroundColor: Colors.white,
             onTap: onItemTapped,
+            type: BottomNavigationBarType.fixed,
           ),
         ),
       ),
@@ -280,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
 class BlankPage extends StatelessWidget {
   final String pageName;
 
-  const BlankPage({Key? key, required this.pageName}) : super(key: key);
+  const BlankPage({super.key, required this.pageName});
 
   @override
   Widget build(BuildContext context) {
@@ -297,4 +303,3 @@ class BlankPage extends StatelessWidget {
     );
   }
 }
-
